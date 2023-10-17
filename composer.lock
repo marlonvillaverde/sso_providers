@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5a7b02068ede00807c2f6259bc37706",
+    "content-hash": "5bbcbf5837128fec7b6b96a36b3e224d",
     "packages": [
         {
             "name": "brick/math",
@@ -4538,6 +4538,57 @@
                 "source": "https://github.com/SocialiteProviders/Auth0/tree/4.1.0"
             },
             "time": "2020-12-01T23:10:59+00:00"
+        },
+        {
+            "name": "socialiteproviders/cognito",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Cognito.git",
+                "reference": "d35cc4f3dc34f35d65dbd36508880d6d59af4a9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Cognito/zipball/d35cc4f3dc34f35d65dbd36508880d6d59af4a9d",
+                "reference": "d35cc4f3dc34f35d65dbd36508880d6d59af4a9d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.4 || ^8.0",
+                "socialiteproviders/manager": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Cognito\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Siebert",
+                    "email": "js@media360.com.au"
+                }
+            ],
+            "description": "Cognito OAuth2 Provider for Laravel Socialite",
+            "keywords": [
+                "Cognito",
+                "aws",
+                "laravel",
+                "oauth",
+                "provider",
+                "socialite"
+            ],
+            "support": {
+                "docs": "https://socialiteproviders.com/cognito",
+                "issues": "https://github.com/socialiteproviders/providers/issues",
+                "source": "https://github.com/socialiteproviders/providers"
+            },
+            "time": "2022-07-18T08:41:37+00:00"
         },
         {
             "name": "socialiteproviders/facebook",

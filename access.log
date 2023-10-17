@@ -794,3 +794,8 @@
 127.0.0.1 - - [16/Oct/2023:03:14:05 +0200] "GET /api/v1/available-providers?type=oauth2.0 HTTP/1.1" 200 1125 "-" "PostmanRuntime/7.33.0"
 127.0.0.1 - - [16/Oct/2023:03:14:29 +0200] "GET /api/v1/available-providers HTTP/1.1" 200 1367 "-" "PostmanRuntime/7.33.0"
 127.0.0.1 - - [16/Oct/2023:03:15:10 +0200] "GET /api/v1/enabled-providers HTTP/1.1" 200 2612 "-" "PostmanRuntime/7.33.0"
+127.0.0.1 - - [17/Oct/2023:03:27:39 +0200] "POST /api/v1/auth/login HTTP/1.1" 401 375 "-" "PostmanRuntime/7.33.0"
+127.0.0.1 - - [17/Oct/2023:16:14:30 +0200] "GET /loginsocial/5aac6458-aef7-44ac-9982-e18183c20e48 HTTP/1.1" 302 2836 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+127.0.0.1 - - [17/Oct/2023:19:13:58 +0200] "GET /loginsocial/23084840-52fa-4c40-b656-dd5f5d4f46e6 HTTP/1.1" 500 24068 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+127.0.0.1 - - [17/Oct/2023:19:13:59 +0200] "GET /favicon.ico HTTP/1.1" 304 247 "http://pruebas.com/loginsocial/23084840-52fa-4c40-b656-dd5f5d4f46e6" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
+127.0.0.1 - - [17/Oct/2023:19:27:35 +0200] "GET /loginsocial/23084840-52fa-4c40-b656-dd5f5d4f46e6 HTTP/1.1" 302 2956 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"

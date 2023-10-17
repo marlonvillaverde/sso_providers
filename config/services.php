@@ -42,15 +42,13 @@ return [
       'base_url' => env('AUTH0_BASE_URL'),
     ],
 
-  'azure' => [    
+    'azure' => [    
       'client_id' => env('AZURE_CLIENT_ID'),
       'client_secret' => env('AZURE_CLIENT_SECRET'),
       'redirect' => env('AZURE_REDIRECT_URI'),
       'tenant' => env('AZURE_TENANT_ID'),
       'proxy' => env('AZURE_PROXY'),  
     ],
-
-
 
     'saml2' => [
         'metadata' => env('SAML2_SOCIALITE_PROVIDER_METADATA'),
@@ -59,7 +57,16 @@ return [
         'certificate' => env('SAML2_SOCIALITE_PROVIDER_CERTIFICATE'),
         'sp_default_binding_method' => env('SAML2_SP_DEFAULT_BINDING_METHOD'),        
         'sp_acs' => env('SAML2_SP_ACS'),
-
     ],
+
+    'cognito' => [
+        'host' => env('COGNITO_HOST'),
+        'client_id' => env('COGNITO_CLIENT_ID'),
+        'client_secret' => env('COGNITO_CLIENT_SECRET'),
+        'redirect' => env('COGNITO_CALLBACK_URL'),
+        'scope' => explode(",", env('COGNITO_LOGIN_SCOPE')),
+        'logout_uri' => env('COGNITO_SIGN_OUT_URL')
+    ],
+
 
 ];

@@ -97,7 +97,7 @@ class AuthenticatedSessionController extends Controller
 
 
         $enabledProvider = EnabledProviderConfig::FindByUuid($provider);
- 
+
         if (!$enabledProvider) {
             return [
                 'message' => 'No se consiguieron datos del provider' ,
@@ -124,7 +124,6 @@ class AuthenticatedSessionController extends Controller
         }
         else{
             $describe = $enabledProvider->provider->name;
-
             $clientId = $cfgProvider['client_id']['value'];
             $clientSecret = $cfgProvider['client_secret']['value'];
             $redirectUrl = env('REDIRECT_PROVIDER_URI').$provider;
@@ -137,9 +136,6 @@ class AuthenticatedSessionController extends Controller
             }
             $config = new \SocialiteProviders\Manager\Config($clientId, $clientSecret, $redirectUrl, $auxCfg);
         }
-
-
-
 
         if (!$config) {
             return [
@@ -175,6 +171,7 @@ class AuthenticatedSessionController extends Controller
         $prop->setValue($var,$config);
         */
        
+//       dd( Socialite::driver($providerConfig['describe'])->setConfig($providerConfig['config'])->redirect());
         return Socialite::driver($providerConfig['describe'])->setConfig($providerConfig['config'])->redirect();        
 
     }

@@ -16,6 +16,7 @@
         "nesbot/carbon": "^2.71",
         "ramsey/uuid": "^4.7",
         "socialiteproviders/auth0": "^4.1",
+        "socialiteproviders/cognito": "^4.1",
         "socialiteproviders/facebook": "^4.1",
         "socialiteproviders/google": "*",
         "socialiteproviders/microsoft-azure": "^5.1",

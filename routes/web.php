@@ -16,11 +16,12 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
 });
 
-
+*/
 Route::get('/home', function(){ return view('welcome'); });
 
 Route::get('loginsocial/{uuid}', [AuthenticatedSessionController::class, 'redirectToProvider']);
@@ -29,3 +30,5 @@ Route::get('loginsocial/callback/{provider}', [AuthenticatedSessionController::c
 
 Route::get('/auth/saml2/metadata', [AuthenticatedSessionController::class, 'getProviderMetadata']);
 //Route::get('/auth/saml2/metadata', function () {    return Socialite::driver('saml2')->getServiceProviderMetadata();});
+
+Route::post('/auth/callback', function () {    $user = Socialite::driver('saml2')->user();});

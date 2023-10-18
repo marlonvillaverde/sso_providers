@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('uuid');
             $table->json('template');
-            $table->string('describe');
             $table->enum('sso_type', ['oauth2.0','saml2.0']);            
+            $table->string('describe');
+            $table->json('cfg_user_template');
             $table->timestamps();            
         });
     }

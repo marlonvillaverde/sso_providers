@@ -16,10 +16,12 @@ return new class extends Migration
             $table->int('company_id');
             $table->string('provider_id');
             $table->string('uuid');
-            $table->string('describe');
+            $table->enum('sso_type', ['oauth2.0','saml2.0']);
             $table->json('cfg_template');
             $table->json('cfg_user');
-            $table->enum('sso_type', ['oauth2.0','saml2.0']);
+            $table->string('describe');
+            $table->enum('status', ['0','1'])->default('1');
+            $table->string('button_info')->default('Inicio de sesion');
             $table->timestamps();
         });
     }

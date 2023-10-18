@@ -14,6 +14,8 @@ use SocialiteProviders\Facebook\FacebookExtendSocialite;
 use SocialiteProviders\Azure\AzureExtendSocialite;
 use SocialiteProviders\Saml2\Saml2ExtendSocialite;
 use SocialiteProviders\Cognito\CognitoExtendSocialite;
+use SocialiteProviders\Okta\OktaExtendSocialite;
+
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -35,6 +37,7 @@ class EventServiceProvider extends ServiceProvider
             AzureExtendSocialite::class.'@handle',
             Saml2ExtendSocialite::class.'@handle',
             CognitoExtendSocialite::class.'@handle',
+            OktaExtendSocialite::class.'@handle',
         ],
 
     ];

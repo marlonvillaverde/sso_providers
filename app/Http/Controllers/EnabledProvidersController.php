@@ -6,7 +6,8 @@ use Illuminate\Routing\Controller;
 use App\Models\EnabledProviderConfig;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
+use Ramsey\Uuid\Uuid;
+use Validator;
 
 class EnabledProvidersController extends Controller
 {
@@ -33,4 +34,22 @@ class EnabledProvidersController extends Controller
 					response(json_encode(['message' => 'Not Found!']), 404);
 	}
 
+
+	public function store (Request $request)
+	{
+		
+		$record = EnabledProviderConfig::create([
+			'company_id' => $request->company_id,
+			'provider_id' => $request->provider->id,
+			'uuid' => Uuid::uuid4(),
+			'sso_type' => $request->provider->sso_type,
+			'cfg_template' => $request->template,
+			'cfg_user' => $request->cfg_user_template,
+			'describe' => $request->describe,
+			'button_info' => $request->button_info,
+		]);
+
+
+		return response($record, 200);
+	}
 }

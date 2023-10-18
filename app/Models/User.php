@@ -26,8 +26,27 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'active',
-        'avatar',
+/*
+    Estos son los que usa modelo api/account
+        
+        'firstname',
+        'lastname',
+        'email',
+        'phone_number',
+        'company_name',
+        'city',
+        'biography',
+        'headline',
+        'department',
+        'media_id',
+        'upload_folder_id',
+        'invitation_id',
+        'password',
+        'language_id',
+        'type'
+
+*/
+
     ];
 
     /**

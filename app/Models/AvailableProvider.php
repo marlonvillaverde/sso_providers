@@ -13,7 +13,8 @@ class AvailableProvider extends Model
         'name',
         'uuid',
         'template',
-        'describe',        
+        'describe',
+        'cfg_user_template',        
     ];
 
     protected $hidden = [

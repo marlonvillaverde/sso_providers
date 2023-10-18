@@ -20,6 +20,7 @@
         "socialiteproviders/facebook": "^4.1",
         "socialiteproviders/google": "*",
         "socialiteproviders/microsoft-azure": "^5.1",
+        "socialiteproviders/okta": "^4.3",
         "socialiteproviders/saml2": "^4.7",
         "socialiteproviders/twitter": "*"
     },

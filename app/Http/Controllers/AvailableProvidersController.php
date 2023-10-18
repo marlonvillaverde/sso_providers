@@ -11,13 +11,11 @@ class AvailableProvidersController extends Controller
 
 	public function index(Request $request)
 	{	
-		if (is_null($request->type)) {
-			$providers = AvailableProvider::all();
-		}else{
-			$providers = AvailableProvider::where('sso_type','=', $request->type)->get();	
+		if (is_null($request->type)){
+			return response(AvailableProvider::all(), 200);
 		}
 		
-		return response( $providers, 200);
+		return response(AvailableProvider::where('sso_type','=', $request->type)->get(), 200);
+	
 	}
-
 }

@@ -127,8 +127,7 @@ class AuthenticatedSessionController extends Controller
             $clientId = $cfgProvider['client_id']['value'];
             $clientSecret = $cfgProvider['client_secret']['value'];
             $redirectUrl = env('REDIRECT_PROVIDER_URI').$provider;
-
-                //$cfgProvider['redirect'];
+            //$cfgProvider['redirect'];
             $auxCfg = [];
             $additionalProvidersConfig = Arr::except($cfgProvider, ['client_id', 'client_secret', 'redirect']);
             foreach( $additionalProvidersConfig as $clave => $valor ){
@@ -170,8 +169,6 @@ class AuthenticatedSessionController extends Controller
         $prop->setAccessible(true);
         $prop->setValue($var,$config);
         */
-       
-//       dd( Socialite::driver($providerConfig['describe'])->setConfig($providerConfig['config'])->redirect());
         return Socialite::driver($providerConfig['describe'])->setConfig($providerConfig['config'])->redirect();        
 
     }

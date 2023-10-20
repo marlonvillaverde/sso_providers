@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Laravel\Socialite\Facades\Socialite;
 
+use App\Http\Controllers\AvailableProvidersController;
+use App\Http\Controllers\EnabledProvidersController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,19 +19,18 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
-/*
-Route::get('/', function () {
-    return view('welcome');
+$API_VERSION = env( 'API_VERSION');
+
+Route::group(['as' => 'api.provider.'.$API_VERSION.'.', 'prefix' => 'api/'.$API_VERSION], function(){
+
+    Route::get('available-providers', [AvailableProvidersController::class, 'index' ])->name('available.providers');
+
+    Route::get('enabled-providers'  , [EnabledProvidersController::class, 'index'])->name('enabled.providers');
+
+    Route::get('enabled-provider/{uuid}', [EnabledProvidersController::class, 'provider'])->name('enabled.providers.info');
+
+    Route::get('loginprovider/{uuid}', [AuthenticatedSessionController::class, 'redirectToProvider'])->name('login.providers');
+
+    Route::get('loginprovider/callback/{provider}', [AuthenticatedSessionController::class, 'handleProviderCallBack' ])->name('login.provider.callback');
+
 });
-
-*/
-Route::get('/home', function(){ return view('welcome'); });
-
-Route::get('loginsocial/{uuid}', [AuthenticatedSessionController::class, 'redirectToProvider']);
-
-Route::get('loginsocial/callback/{provider}', [AuthenticatedSessionController::class, 'handleProviderCallBack']);
-
-Route::get('/auth/saml2/metadata', [AuthenticatedSessionController::class, 'getProviderMetadata']);
-//Route::get('/auth/saml2/metadata', function () {    return Socialite::driver('saml2')->getServiceProviderMetadata();});
-
-Route::post('/auth/callback', function () {    $user = Socialite::driver('saml2')->user();});

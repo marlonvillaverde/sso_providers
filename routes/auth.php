@@ -19,71 +19,27 @@ use App\Http\Controllers\EnabledProvidersController;
 use Illuminate\Support\Facades\Route;
 
 
-$apiVersion = 'v1';
+$API_VERSION = env( 'API_VERSION');
 
 
-Route::middleware('guest')->prefix($apiVersion)->group( function () {
+Route::group(['as' => 'api.provider.'.$API_VERSION.'.', 'prefix' => $API_VERSION], function(){
 
-    /**
-     * Rutas para autenticacion de usuarios
-     */
-    Route::prefix('auth')->group( function(){
+    Route::get('available-providers', [AvailableProvidersController::class, 'index' ])->name('available.providers');
 
-        Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::get('enabled-providers'  , [EnabledProvidersController::class, 'index'])->name('enabled.providers');
 
-        Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::get('enabled-provider/{uuid}', [EnabledProvidersController::class, 'provider'])->name('enabled.providers.info');
 
-        Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-                    ->name('verification.verify');
-    
-    });
+    Route::get('loginprovider/{uuid}', [AuthenticatedSessionController::class, 'redirectToProvider'])->name('login.providers');
 
-
-    
-    
-
-/*
-
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
-
-
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-                ->name('password.request');
-
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-                ->name('password.email');
-
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-                ->name('password.reset');
-
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-                ->name('password.store');
-                */
-               
-
-    /**
-     * Rutas para autenticacion de provider 
-     */
-    Route::get('available-providers', [AvailableProvidersController::class, 'index']);
-
-    Route::get('enabled-providers', [EnabledProvidersController::class, 'index']);
-
-    Route::get('enabled-provider/{uuid}', [EnabledProvidersController::class, 'provider']);
-
-//    Route::get('login/provider/{uuid}', [AuthenticatedSessionController::class, 'redirectToProvider']);
-
-
-    Route::get('loginsocial/{uuid}', [AuthenticatedSessionController::class, 'redirectToProvider'])->name('login.social');
-
-    Route::get('loginsocial/callback/{provider}', [AuthenticatedSessionController::class, 'handleProviderCallBack'])
-                ->name('login.social.callback');
-
+    Route::get('loginprovider/callback/{provider}', [AuthenticatedSessionController::class, 'handleProviderCallBack' ])->name('login.provider.callback');
 
 });
 
+       
 
-Route::middleware('auth:api')->prefix($apiVersion.'/auth')->group(function () {
+
+Route::middleware('auth:api')->prefix($API_VERSION.'/auth')->group(function () {
 /*
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');

@@ -15,9 +15,11 @@ use App\Models\EnabledProviderConfig;
 use App\Models\ProviderLogin;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
-//use Reflection;
-//use ReflectionClass;
+
+use Reflection;
+use ReflectionClass;
 
 
 class AuthenticatedSessionController extends Controller
@@ -127,6 +129,7 @@ class AuthenticatedSessionController extends Controller
             $clientId = $cfgProvider['client_id']['value'];
             $clientSecret = $cfgProvider['client_secret']['value'];
             $redirectUrl = env('REDIRECT_PROVIDER_URI').$provider;
+
             //$cfgProvider['redirect'];
             $auxCfg = [];
             $additionalProvidersConfig = Arr::except($cfgProvider, ['client_id', 'client_secret', 'redirect']);
@@ -162,14 +165,17 @@ class AuthenticatedSessionController extends Controller
             return response(json_encode($providerConfig['message']),404);
         }
             
-        /*
-        $var = Socialite::driver($describe)->setConfig($config);
-        *$reflex = new ReflectionClass($var);
-        $prop=$reflex->getProperty('config');
-        $prop->setAccessible(true);
-        $prop->setValue($var,$config);
-        */
-        return Socialite::driver($providerConfig['describe'])->setConfig($providerConfig['config'])->redirect();        
+        
+        //$var = Socialite::driver($providerConfig['describe'])->setConfig($providerConfig['config'])->redirect();
+        //$reflex = new ReflectionClass($var);
+        //$prop=$reflex->getProperty('targetUrl');
+        //$prop->setAccessible(true);
+        //$prop->getValue($var,$config);
+        
+    
+       //return Socialite::driver($providerConfig['describe'])->setConfig($providerConfig['config'])->redirect();
+
+       return Socialite::driver($providerConfig['describe'])->setConfig($providerConfig['config'])->redirect();        
 
     }
 

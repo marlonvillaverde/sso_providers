@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Http;
 use Reflection;
 use ReflectionClass;
 
+use Illuminate\Http\RedirectResponse;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -128,7 +130,7 @@ class AuthenticatedSessionController extends Controller
             $describe = $enabledProvider->provider->name;
             $clientId = $cfgProvider['client_id']['value'];
             $clientSecret = $cfgProvider['client_secret']['value'];
-            $redirectUrl = env('REDIRECT_PROVIDER_URI').$provider;
+            $callbackUrl = env('LOGIN_PROVIDER_URL').'callback/'.$provider;
 
             //$cfgProvider['redirect'];
             $auxCfg = [];
@@ -136,7 +138,7 @@ class AuthenticatedSessionController extends Controller
             foreach( $additionalProvidersConfig as $clave => $valor ){
                 $auxCfg[$clave]=$valor['value'];
             }
-            $config = new \SocialiteProviders\Manager\Config($clientId, $clientSecret, $redirectUrl, $auxCfg);
+            $config = new \SocialiteProviders\Manager\Config($clientId, $clientSecret, $callbackUrl, $auxCfg);
         }
 
         if (!$config) {
@@ -249,8 +251,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         return $this->loginAndRedirect($user, $request);
-        //event(new Logueado($userSocialite, $provider) );
-
+  
     }
     
 
@@ -260,12 +261,54 @@ class AuthenticatedSessionController extends Controller
 
         [$access_token, $refresh_token] = $user->createTokens();
 
-        $response = [
+        $payload = [
             'access_token' => $access_token,
             'refresh_token' => $refresh_token
         ];
 
-        return $response;
+
+        $urlDestino = Env( 'REDIRECT_PROVIDER_URL' ).
+            '?culture='.$this->generate_jwt( $payload, 'NUESTRACLAVESUPERSECRETA');
+
+        //$headers = ['X-CODE-SIGN' => $this->generate_jwt( $payload, 'NUESTRACLAVESUPERSECRETA')];
+        
+        return response()->redirectTo($urlDestino);
+
     }
-    
+
+
+
+    private function generate_jwt($payload, $secret)
+    {
+
+        $headers = [
+
+            "alg" => "HS256",
+
+            "typ" => "JWT"
+
+        ];
+
+        $headers_encoded = $this->base64url_encode(json_encode($headers));
+
+        $payload_encoded = $this->base64url_encode(json_encode($payload));
+
+        $signature = hash_hmac('SHA256', "$headers_encoded.$payload_encoded", $secret, true);
+
+        $signature_encoded = $this->base64url_encode($signature);
+
+        $jwt = "$headers_encoded.$payload_encoded.$signature_encoded";
+        return $jwt;
+
+    }
+
+ 
+
+    private function base64url_encode($str)
+    {
+
+        return rtrim(strtr(base64_encode($str), '+/', '-_'), '=');
+    }
+
 }
+

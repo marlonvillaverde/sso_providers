@@ -21,6 +21,38 @@ class EnabledProvidersController extends Controller
 
 
 	/**
+	 * Get the enabled providers for company uuid
+	 * @param  string $uuid [description]
+	 * @return [type]       [description]
+	 */
+	public function byCompany(string $uuid)
+	{
+
+		$configProviders = EnabledProviderConfig::FindByCompany($uuid);
+
+		$urls = collect([]);
+
+		foreach($configProviders as $provider){
+
+			$urls->push([
+				"button_info" => $provider->button_info,
+				"uuid" => $provider->uuid,				
+			]);
+
+		}
+
+		return response()->json([
+						"base_url" => env('LOGIN_PROVIDER_URL'),
+						"urls" => $urls,
+					],200);
+
+	}
+
+
+
+
+
+	/**
 	 * [Datos del provider seleccionado segun su uuid]
 	 * @param  [string] $uuid 			[codigo uuid del provider que se selecciono]
 	 * @return [EnabledProviderConfig]  [Datos del provider seleccionado]
@@ -52,4 +84,9 @@ class EnabledProvidersController extends Controller
 
 		return response($record, 200);
 	}
+
+
+
+
+
 }

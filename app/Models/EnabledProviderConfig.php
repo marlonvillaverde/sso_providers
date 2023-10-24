@@ -19,9 +19,19 @@ class EnabledProviderConfig extends Model
     ];
 
 
+    /**
+     * Todos los providers disponibles para una compania
+     * @param string $uuid [description]
+     */
+    public static function FindByCompany(string $uuid)
+    {
+        return Self::where('company_uuid', '=',  $uuid)->where('status','=','1')->get();
+    }
+
+
     public static function FindByUuid($uuid)
     {
-        return Self::where('uuid', $uuid)->get()->first();
+        return Self::where('uuid', $uuid)->first();
     }
 
     public function provider(): BelongsTo

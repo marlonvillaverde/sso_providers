@@ -1,17 +1,7 @@
 <?php
 
-/*
-use App\Http\Controllers\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-*/
-
-use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\RegisteredUserController;
+
 
 use App\Http\Controllers\AvailableProvidersController;
 use App\Http\Controllers\EnabledProvidersController;
@@ -24,15 +14,8 @@ $API_VERSION = env( 'API_VERSION');
 
 Route::group(['as' => 'api.provider.'.$API_VERSION.'.', 'prefix' => $API_VERSION], function(){
 
-    Route::get('available-providers', [AvailableProvidersController::class, 'index' ])->name('available.providers');
-
-    Route::get('enabled-providers'  , [EnabledProvidersController::class, 'index'])->name('enabled.providers');
-
-    Route::get('enabled-provider/{uuid}', [EnabledProvidersController::class, 'provider'])->name('enabled.providers.info');
-
-    Route::get('loginprovider/{uuid}', [AuthenticatedSessionController::class, 'redirectToProvider'])->name('login.providers');
-
-    Route::get('loginprovider/callback/{provider}', [AuthenticatedSessionController::class, 'handleProviderCallBack' ])->name('login.provider.callback');
+  
+    Route::get('enabled-providers-by-company/{uuid}', [EnabledProvidersController::class, 'byCompany' ])->name('enabled.providers.by.company');
 
 });
 

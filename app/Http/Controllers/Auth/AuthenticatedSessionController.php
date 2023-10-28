@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,18 +14,22 @@ use App\Models\EnabledProviderConfig;
 use App\Models\ProviderLogin;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Http;
-
-
 use Reflection;
 use ReflectionClass;
-
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Crypt;
+use App\helpers;
+//use App\Traits\Encrypter;
+
 
 
 class AuthenticatedSessionController extends Controller
 {
 
+    const CLAVE_SECRETA = "NUESTRACLAVESECRETA";
 
     const SSO_SAML_TYPE = 'saml2.0';
     /**
@@ -261,16 +264,19 @@ class AuthenticatedSessionController extends Controller
 
         [$access_token, $refresh_token] = $user->createTokens();
 
-        $payload = [
-            'access_token' => $access_token,
-            'refresh_token' => $refresh_token
-        ];
+        $payload = json_encode([
+                'access_token' => $access_token,
+                'refresh_token' => $refresh_token
+            ]);
 
+        $payload = cipher($payload);
+        
 
+        $redirect = Env( 'REDIRECT_PROVIDER_URL' )."/login";
+        //`$response->getOrigin() ?: Env( 'REDIRECT_PROVIDER_URL' ).'/login/companies';
         $urlDestino = Env( 'REDIRECT_PROVIDER_URL' ).
-            '?culture='.$this->generate_jwt( $payload, 'NUESTRACLAVESUPERSECRETA');
+            "/login?accessToken={$access_token}&refreshToken={$refresh_token}&redirect={$redirect}";
 
-        //$headers = ['X-CODE-SIGN' => $this->generate_jwt( $payload, 'NUESTRACLAVESUPERSECRETA')];
         
         return response()->redirectTo($urlDestino);
 
@@ -291,24 +297,24 @@ class AuthenticatedSessionController extends Controller
 
         $headers_encoded = $this->base64url_encode(json_encode($headers));
 
-        $payload_encoded = $this->base64url_encode(json_encode($payload));
-
+        $payload_encoded = $this->base64url_encode($payload);
+        
         $signature = hash_hmac('SHA256', "$headers_encoded.$payload_encoded", $secret, true);
 
         $signature_encoded = $this->base64url_encode($signature);
 
         $jwt = "$headers_encoded.$payload_encoded.$signature_encoded";
+    
         return $jwt;
 
     }
-
- 
 
     private function base64url_encode($str)
     {
 
         return rtrim(strtr(base64_encode($str), '+/', '-_'), '=');
     }
+
 
 }
 

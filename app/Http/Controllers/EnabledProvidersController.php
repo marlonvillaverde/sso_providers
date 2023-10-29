@@ -69,11 +69,12 @@ class EnabledProvidersController extends Controller
 
 	public function store (Request $request)
 	{
-		
+
 		$record = EnabledProviderConfig::create([
-			'company_id' => $request->company_id,
-			'provider_id' => $request->provider->id,
 			'uuid' => Uuid::uuid4(),
+			'company_id' => $request->company_id,
+			'company_uuid' => hash_hmac('sha256', $request->company_id, 'SomeAwesomePassword'),
+			'provider_id' => $request->provider->id,
 			'sso_type' => $request->provider->sso_type,
 			'cfg_template' => $request->template,
 			'cfg_user' => $request->cfg_user_template,

@@ -20,15 +20,8 @@ use PhpParser\Node\Expr\PostDec;
 |
 */
 
-$API_VERSION = env( 'API_VERSION');
 
-Route::group(['as' => 'api.provider.'.$API_VERSION.'.', 'prefix' => 'api/'.$API_VERSION], function(){
-
-    Route::get('available-providers', [AvailableProvidersController::class, 'index' ])->name('available.providers');
-
-    Route::get('enabled-providers'  , [EnabledProvidersController::class, 'index'])->name('enabled.providers');
-
-    Route::get('enabled-provider/{uuid}', [EnabledProvidersController::class, 'provider'])->name('enabled.providers.info');
+Route::group(['as' => 'api.provider.', 'prefix' => 'api/'], function(){
 
     Route::get('loginprovider/{uuid}', [AuthenticatedSessionController::class, 'redirectToProvider'])->name('login.providers');
 

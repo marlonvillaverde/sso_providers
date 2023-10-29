@@ -16,13 +16,10 @@
         "nesbot/carbon": "^2.71",
         "ramsey/uuid": "^4.7",
         "socialiteproviders/auth0": "^4.1",
-        "socialiteproviders/cognito": "^4.1",
-        "socialiteproviders/facebook": "^4.1",
+        "socialiteproviders/cognito": "^4.1",        
         "socialiteproviders/google": "*",
         "socialiteproviders/microsoft-azure": "^5.1",
-        "socialiteproviders/okta": "^4.3",
-        "socialiteproviders/saml2": "^4.7",
-        "socialiteproviders/twitter": "*"
+        "socialiteproviders/okta": "^4.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

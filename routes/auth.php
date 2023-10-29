@@ -9,42 +9,22 @@ use App\Http\Controllers\EnabledProvidersController;
 use Illuminate\Support\Facades\Route;
 
 
-$API_VERSION = env( 'API_VERSION');
 
+Route::group(['as' => 'api.provider.'], function(){
 
-Route::group(['as' => 'api.provider.'.$API_VERSION.'.', 'prefix' => $API_VERSION], function(){
+    Route::get('available-providers', [AvailableProvidersController::class, 'index' ])->name('available.providers');
 
-  
-    Route::get('enabled-providers-by-company/{uuid}', [EnabledProvidersController::class, 'byCompany' ])->name('enabled.providers.by.company');
+    Route::get('enabled-providers'  , [EnabledProvidersController::class, 'index'])->name('enabled.providers');
 
+      Route::get('enabled-providers-by-company/{uuid}', [EnabledProvidersController::class, 'byCompany' ])->name('enabled.providers.by.company');
+
+    Route::get('enabled-provider/{uuid}', [EnabledProvidersController::class, 'provider'])->name('enabled.providers.info');
 });
 
        
 
 
-Route::middleware('auth:api')->prefix($API_VERSION.'/auth')->group(function () {
-/*
-    Route::get('verify-email', EmailVerificationPromptController::class)
-                ->name('verification.notice');
-
-    
-
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-                ->middleware('throttle:6,1')
-                ->name('verification.send');
-
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-                ->name('password.confirm');
-
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-
-  */ 
- 
-
-    
-    
+Route::middleware('auth:api')->prefix('/auth')->group(function () {    
 
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
